@@ -38,24 +38,13 @@
 						<div class="box">
 				            <div class="content-wrap">
 				                <h6>Sign In</h6>
-				                {{-- <div class="social">
-		                            <a class="face_login" href="#">
-		                                <span class="face_icon">
-		                                    <img src="{{ asset('layouts/images/facebook.png') }}" alt="fb">
-		                                </span>
-		                                <span class="text">Sign in with Facebook</span>
-		                            </a>
-		                            <div class="division">
-		                                <hr class="left">
-		                                <span>or</span>
-		                                <hr class="right">
-		                            </div>
-		                        </div> --}}
-		                        @if(session("thongbao"))
-									<div class="alert alert-success">
-										{{session("thongbao")}}
+			            		@if(count($errors)>0)
+									<div class="alert alert-danger">
+										@foreach($errors->all() as $err)
+										<p>{{$err}}</p>
+										@endforeach
 									</div>
-		                        @endif
+			            		@endif
 				                <input class="form-control" type="text" placeholder="Username" name='username' required>
 				                <input class="form-control" type="password" placeholder="Password" name='password' required>
 				                <div class="action">

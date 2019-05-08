@@ -6,17 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\UserClass;
+use App\Admin;
 use Validator;
 class LoginController extends Controller
 {
     public function getLogin(){
+        if(Auth::check()){
+            return redirect('/');
+        }
     	return view('login');
     }
 
     public function postLogin(Request $request){
         if(Auth::attempt(['username'=>$request->username,'password'=>$request->password])){
-    		$userClass=UserClass::where([["uid",Auth::user()->id],["cid",$request->class]])->get()->first();
-            if(!$userClass){
+    		$userClass=UserClass::where([["uid",Auth::user()->id]])->get()->first();
+            if($userClass == null){
                 return redirect()->route('join');
             }else{
                 return redirect("/");
@@ -56,7 +60,32 @@ class LoginController extends Controller
         $user->password=bcrypt($request->password);
         $user->name=$request->name;
         $user->email=$request->email;
+        $user->address = $request->address;
+        $user->dob = $request->dob;
         $user->save();
         return redirect("login")->with("thongbao","Tạo tài khoản thành công");
     }
+
+
+    public function addAdmin(){
+        $admin = Admin::find(1);
+        $admin->username = 'admin';
+        $admin->password=bcrypt('admin');
+        $admin->save();
+        return redirect('admin/login');
+    }
+
+    public function getAdminLogin(){
+        if(Auth::guard('admin')->check())
+            return redirect('admin/');
+        return view('admin.login');
+    }
+    public function postAdminLogin(Request $request){
+        if(Auth::guard('admin')->attempt(['username'=>$request->username,'password'=>$request->password])){
+            return  redirect()->route('admin.home');
+        }
+        return redirect()->back();
+    }
+
+
 }

@@ -68,15 +68,15 @@
         <ul class="nav">
             <!-- Main menu -->
             <li class="submenu">
-                 <a href="#">
-                    <i class="glyphicon glyphicon-list"></i> Danh sách lớp tham gia
+                 <a href="#" >
+                    <i class="glyphicon glyphicon-list"></i> Danh sách lớp hiện có
                     <span class="caret pull-right"></span>
                  </a>
                  <!-- Sub menu -->
                  <ul>
                     @if($user->userClass!=null)
-                      @foreach($user->userClass as $uc)
-                          <li><a href="#">{{$uc->class->id}} - {{$uc->class->cname}}</a></li>
+                      @foreach($class as $c)
+                          <li><a>{{$c->id}} - {{$c->cname}}</a></li>
                       @endforeach
                     @endif
                 </ul>
@@ -89,16 +89,23 @@
 <div class="col-md-8">
 	<div class="content-box-large">
 		<div class="panel-heading">
-        <div class="panel-title"><h2>Tham gia lớp học</h2></div>
+        <div class="panel-title"><h2>Tạo lớp học</h2></div>
       
-<!--         <div class="panel-options">
-          <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-          <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-        </div> -->
+        <div class="panel-options">
+<!--           <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+          <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a> -->
+        </div>
     </div>
 		<div class="panel-body">
-			<form class="form-horizontal" method="post" action="join">
+			<form class="form-horizontal" method="post" action="create">
         {{ csrf_field() }}
+        @if(count($errors)>0)
+          <div class="alert alert-danger">
+            @foreach($errors->all() as $err)
+            <p>{{$err}}</p>
+            @endforeach
+          </div>
+        @endif
 				<div class="form-group">
           @if(session("thongbao"))
             <div class="alert alert-success">
@@ -115,20 +122,20 @@
               {{session("tontai")}}
             </div>
           @endif
-					<label for="inputEmail3" class="col-sm-2 control-label" >Nhập mã lớp</label>
+					<label for="cname" class="col-sm-2 control-label" >Tên lớp</label>
 					<div class="col-sm-5">
-				  	<input type="input" class="form-control" id="inputEmail3" name="cid" placeholder="Nhập mã lớp">
+				  	<input type="text" class="form-control" id="cname" name="cname" placeholder="Nhập mã lớp" required="">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="inputPassword3" class="col-sm-2 control-label" >Mã kích hoạt</label>
+					<label for="enroll" class="col-sm-2 control-label" >Mã kích hoạt</label>
 					<div class="col-sm-5">
-				  		<input type="password" class="form-control" id="inputPassword3" name="enroll" placeholder="Mã kích hoạt">
+				  		<input type="password" class="form-control" id="enroll" name="enroll" placeholder="Mã kích hoạt" required="">
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-5">
-				  		<button type="submit" class="btn btn-primary">Enroll</button>
+				  		<button type="submit" class="btn btn-primary">Tạo lớp</button>
 					</div>
 				</div>
 			</form>

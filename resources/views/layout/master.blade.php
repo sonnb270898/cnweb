@@ -3,21 +3,24 @@
   <head>
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- jQuery UI -->
     <base href="{{asset('')}}">
     <link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <!-- Bootstrap -->
     <link href="{{ asset('layouts/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- styles -->
     <link href="{{ asset('layouts/css/styles.css') }}" rel="stylesheet">
-
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> -->
     <link href="{{ asset('layouts/vendors/form-helpers/css/bootstrap-formhelpers.min.css') }}" rel="stylesheet">
     <link href="{{ asset('layouts/vendors/select/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('layouts/vendors/tags/css/bootstrap-tags.css') }}" rel="stylesheet">
 
     <link href="{{ asset('layouts/css/forms.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('layouts/css/xxx.css') }}" rel="stylesheet">
+    <link href="{{ asset('layouts/css/dataTables.css') }}" rel="stylesheet">
+    <link href="{{ asset('layouts/css/jquery-ui.css') }}" rel="stylesheet">
   </head>
   <body>
   	{{-- @include("layout.header") --}}
@@ -31,7 +34,9 @@
 		</div>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="{{ asset('layouts/js/jquery.js') }}"></script>
+    <script src="{{ asset('layouts/js/jquery2.js') }}"></script>
+    <script src="{{ asset('layouts/js/dataTables.js') }}"></script>
     <!-- jQuery UI -->
     <!-- <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -59,5 +64,6 @@
 
     <script src="{{ asset('layouts/js/custom.js') }}"></script>
     <script src="{{ asset('layouts/js/forms.js') }}"></script>
+    @yield('script')
   </body>
 </html>

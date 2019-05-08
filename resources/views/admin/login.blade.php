@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sign Up</title>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="{{ asset('layouts/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -22,7 +22,7 @@
 	           <div class="col-md-12">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="">Sign Up</a></h1>
+	                 <h1><a href="">Login</a></h1>
 	              </div>
 	           </div>
 	        </div>
@@ -33,11 +33,11 @@
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 				<div class="login-wrapper">
-			        <div class="box">
-			            <div class="content-wrap">
-			            	<form action="" method="post">
-			            		{{ csrf_field() }}
-			            		<h6>Sign Up</h6>
+					<form action="admin/login" method='post'>
+						{{ csrf_field() }}
+						<div class="box">
+				            <div class="content-wrap">
+				                <h6>Sign In</h6>
 			            		@if(count($errors)>0)
 									<div class="alert alert-danger">
 										@foreach($errors->all() as $err)
@@ -45,22 +45,14 @@
 										@endforeach
 									</div>
 			            		@endif
-				                <input class="form-control" type="text" placeholder="Username" name="username" required="">
-				                <input class="form-control" type="text" placeholder="Name" name="name" required="">
-				                <input class="form-control" type="text" placeholder="E-mail address" name="email" >
-				                <input class="form-control" type="password" placeholder="Password" name="password" required="">
-				                <input class="form-control" type="password" placeholder="Confirm Password" name="confirm" required="">
-				        		<input class="form-control" type="text" placeholder="Address" name="address" >
-				        		<input class="form-control" type="date" placeholder="" name="dob" >				
-				                <button type="submit" class="btn btn-primary signup" style="margin-top:10px ">Sign Up</button>      
-			            	</form>
-			            </div>
-			        </div>
-
-			        <div class="already">
-			            <p>Have an account already?</p>
-			            <a href="{{route('login')}}">Login</a>
-			        </div>
+				                <input class="form-control" type="text" placeholder="Username" name='username' required>
+				                <input class="form-control" type="password" placeholder="Password" name='password' required>
+				                <div class="action">
+				                    <button class="btn btn-primary">Login</button>
+				                </div>                
+				            </div>
+				        </div>	
+					</form>
 			    </div>
 			</div>
 		</div>

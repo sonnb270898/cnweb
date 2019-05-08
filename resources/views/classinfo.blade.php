@@ -8,7 +8,7 @@
          <div class="container">
             <div class="row">
                <div class="col-md-5">
-                  <!-- Logo -->
+
                   <div class="logo">
                      <h1><a href="">Nhom17</a></h1>
                   </div>
@@ -63,22 +63,27 @@
     </div>
 @endsection
 @section("menu")
-  <div class="col-md-3">
+  <div class="col-md-2">
     <div class="sidebar content-box" style="display: block;">
         <ul class="nav">
-            <!-- Main menu -->
+
+            <li class=""><a href="class/{{$class->id}}/list"><i class="glyphicon glyphicon-home"></i>Danh sách sinh viên</a></li>
+            <li class=""><a href="class/{{$class->id}}/info"><i class="glyphicon glyphicon-home"></i>THông tin lớp</a></li>
+            @if($user->userClass!=null)
+              <li><a href="class/{{$class->id}}/discussion"><i class="glyphicon glyphicon-tasks"></i>New discussion</a></li>
+            @endif
             <li class="submenu">
                  <a href="#">
-                    <i class="glyphicon glyphicon-list"></i> Danh sách lớp tham gia
+                    <i class="glyphicon glyphicon-list"></i>Discussion
                     <span class="caret pull-right"></span>
                  </a>
-                 <!-- Sub menu -->
+ 
                  <ul>
-                    @if($user->userClass!=null)
-                      @foreach($user->userClass as $uc)
-                          <li><a href="#">{{$uc->class->id}} - {{$uc->class->cname}}</a></li>
-                      @endforeach
-                    @endif
+                    @foreach($class->post as $post)
+                      @if($post->status == 0)
+                        <li><a href="class/{{$user->userClass[0]->cid}}/discussion/{{$post->id}}">{{$post->title}}</a></li>
+                      @endif
+                    @endforeach
                 </ul>
             </li>
         </ul>
@@ -89,7 +94,7 @@
 <div class="col-md-8">
 	<div class="content-box-large">
 		<div class="panel-heading">
-        <div class="panel-title"><h2>Tham gia lớp học</h2></div>
+        <div class="panel-title"><h2>Thông tin lớp</h2></div>
       
 <!--         <div class="panel-options">
           <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -97,42 +102,73 @@
         </div> -->
     </div>
 		<div class="panel-body">
-			<form class="form-horizontal" method="post" action="join">
-        {{ csrf_field() }}
+			<form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="cid" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="cid" placeholder="ID" disabled="" value="{{$class->id}}">
+          </div>
+        </div>        
 				<div class="form-group">
-          @if(session("thongbao"))
-            <div class="alert alert-success">
-              {{session("thongbao")}}
-            </div>
-          @endif
-          @if(session("thatbai"))
-            <div class="alert alert-danger">
-              {{session("thatbai")}}
-            </div>
-          @endif
-          @if(session("tontai"))
-            <div class="alert alert-danger">
-              {{session("tontai")}}
-            </div>
-          @endif
-					<label for="inputEmail3" class="col-sm-2 control-label" >Nhập mã lớp</label>
-					<div class="col-sm-5">
-				  	<input type="input" class="form-control" id="inputEmail3" name="cid" placeholder="Nhập mã lớp">
+					<label for="cname" class="col-sm-2 control-label">Tên lớp</label>
+					<div class="col-sm-8">
+				  	<input type="text" class="form-control" id="cname" placeholder="Tên lớp" disabled="" value="{{$class->cname}}">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="inputPassword3" class="col-sm-2 control-label" >Mã kích hoạt</label>
-					<div class="col-sm-5">
-				  		<input type="password" class="form-control" id="inputPassword3" name="enroll" placeholder="Mã kích hoạt">
+					<label for="creator" class="col-sm-2 control-label">Người tạo</label>
+					<div class="col-sm-8">
+				  		<input type="text" class="form-control" id="creator" placeholder="Ngày sinh" disabled="" value="{{$creator->name}}">
 					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-5">
-				  		<button type="submit" class="btn btn-primary">Enroll</button>
-					</div>
-				</div>
+        <div class="form-group">
+          <label for="create_at" class="col-sm-2 control-label">Ngày tạo</label>
+          <div class="col-sm-8">
+              <input type="text" class="form-control" id="create_at" placeholder="Ngày tạo" disabled="" value="{{$class->createdate}}">
+          </div>
 			</form>
 		</div>
+  <hr>
+  <hr>
+  <hr>
+    <div class="panel-heading">
+        <div class="panel-title"><h2>Tra cứu thông tin lớp</h2></div>
+      
+<!--         <div class="panel-options">
+          <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+          <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+        </div> -->
+    </div>
+    <div class="panel-body">
+          <div class="form-group">
+          <table id="example" class="display" style="width:100%">
+              <thead>
+                  <th>id</th>
+                  <th>Tên lớp</th>
+                  <th>Ngày tạo</th>
+                  <th>Giáo viên</th>
+              </thead>
+              <tbody id="body">
+                  @foreach($classes as $cl)
+                  <tr>
+                      <td>{{$cl->id}}</td>
+                      <td>{{$cl->cname}}</td>
+                      <td>{{$cl->createdate}}</td>
+                      <td>{{$cl->u->name}}</td>
+                  </tr>
+                  @endforeach
+              </tbody>
+          </table>
+          </div>
+      </div>
+
 	</div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    });
+});
+</script>
 @endsection

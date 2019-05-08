@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class RepComment extends Model
 {
     //
     public $timestamps=false;
-    protected $table="post";
+    protected $table="rep_cmt";
 
     public function comment(){
-    	return $this->hasMany(Comment::class,"pid","id");
+    	return $this->belongsTo(Comment::class,"id","id");
     }
 
 }

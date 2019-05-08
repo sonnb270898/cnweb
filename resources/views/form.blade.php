@@ -9,7 +9,7 @@
                <div class="col-md-5">
                   <!-- Logo -->
                   <div class="logo">
-                     <h1><a href="index.html">Nhom17</a></h1>
+                     <h1><a href="">Nhom17</a></h1>
                   </div>
                </div>
                 <div class="col-md-2">
@@ -23,6 +23,7 @@
                                 <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
                               @endforeach
                               <li><a href="join">Join Class</a></li>
+                              <li><a href="create">Create Class</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -46,9 +47,9 @@
                       <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
                         <ul class="nav navbar-nav">
                           <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, {{$user->username}}<b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
-                              <li><a href="{{Route('profile')}}">Profile</a></li>
+                              <li><a href="">Profile</a></li>
                               <li><a href="{{Route('logout')}}">Logout</a></li>
                             </ul>
                           </li>
@@ -65,9 +66,10 @@
     <div class="sidebar content-box" style="display: block;">
         <ul class="nav">
             <!-- Main menu -->
-            <li class="current"><a href="profile"><i class="glyphicon glyphicon-home"></i>Thông tin cá nhân</a></li>
+            <li class=""><a href="class/{{$class->id}}/list"><i class="glyphicon glyphicon-home"></i>Danh sách sinh viên</a></li>
+            <li class=""><a href="class/{{$class->id}}/info"><i class="glyphicon glyphicon-home"></i>THông tin lớp</a></li>
             @if($user->userClass!=null)
-              <li><a href="class/{{$user->userClass[0]->cid}}/discussion"><i class="glyphicon glyphicon-tasks"></i>New discussion</a></li>
+              <li ><a href="class/{{$class->id}}/discussion"><i class="glyphicon glyphicon-tasks"></i>New discussion</a></li>
             @endif
             <li class="submenu">
                  <a href="#">
@@ -76,11 +78,11 @@
                  </a>
                  <!-- Sub menu -->
                  <ul>
-                    @if($user->userClass!=null)
-                      @foreach($user->userClass[0]->class->post as $post)
-                          <li><a href="class/{{$user->userClass[0]->cid}}/#{{$post->id}}">{{$post->title}}</a></li>
+                      @foreach($class->post as $post)
+                        @if($post->status == 0)
+                          <li><a href="class/{{$class->id}}/discussion/{{$post->id}}">{{$post->title}}</a></li>
+                        @endif
                       @endforeach
-                    @endif
                 </ul>
             </li>
         </ul>
@@ -91,43 +93,36 @@
 <div class="col-lg-10">
 	<div class="content-box-large">
 		<div class="panel-heading">
-        <div class="panel-title"><h2 class="page-header">Question</h2></div>				   
+        <div class="panel-title"><h2 class="page-header">Bài đăng</h2></div>				   
     </div>
 		<div class="panel-body">
-        <form action="class/{{$class->id}}/discussion" method="post">
+        <form action="class/{{$class->id}}/discussion" method="post" enctype="multipart/form-data">
           {{csrf_field()}}
             <div class="row form-group">
-                <div class="col-md-2"><label>Summary</label></div>
-                <div class="col-md-10"><input class="form-control" name="title"></div>
+                <div class="col-md-2"><label>Tiêu đề</label></div>
+                <div class="col-md-8"><input class="form-control" name="title"></div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2"><label>Detail</label></div>
-                <div class="col-md-10"> <textarea class="form-control" rows="5" name="content"></textarea></div>
+                <div class="col-md-2"><label>Nội dung</label></div>
+                <div class="col-md-8"> <textarea class="form-control" rows="5" name="content"></textarea></div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2"><label>File input</label></div>
-                <div class="col-md-10">
-                     <input type="file">
+                <div class="col-md-2"><label>File</label></div>
+                <div class="col-md-4">
+                    <input type="file" name='image' id='fileinput'>
                 </div>
             </div>
-             {{-- <div class="row form-group">
-                <div class="col-md-2"><label>Show my name as</label></div>
-                <div class="col-md-10">
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-            </div> --}}
             <button type="submit" class="btn btn-danger">Post My Question to {{$class->id}}!</button>
-            {{-- <a href=''class="btn btn-default">Save Draft</a> --}}
-            <a href='{{ URL::previous() }}'class="btn btn-default">Cancel</a>
-            {{-- <a href=''class="btn btn-default">Preview Post</a> --}}
+            <!-- {{-- <a href=''class="btn btn-default">Save Draft</a> --}} -->
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <!-- {{-- <a href=''class="btn btn-default">Preview Post</a> --}} -->
         </form>
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('script')
+  <script type="text/javascript">
+  </script>
 @endsection

@@ -8,9 +8,12 @@ class Classes extends Model
 {
     //
     protected $table="class";
-    public $timestamp=false;
+    public $timestamps=false;
     
     public function post(){
     	return $this->hasMany(Post::class,"cid","id");
+    }
+    public function u(){
+    	return $this->beLongsTo(User::class,"creator","id");
     }
 }

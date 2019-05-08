@@ -1,7 +1,6 @@
 @extends("layout.master")
-
 @section("title")
-	profile
+	Form
 @endsection
 @section("header")
         <div class="header">
@@ -63,22 +62,27 @@
     </div>
 @endsection
 @section("menu")
-  <div class="col-md-3">
+  <div class="col-md-2">
     <div class="sidebar content-box" style="display: block;">
         <ul class="nav">
             <!-- Main menu -->
+            <li class=""><a href="class/{{$class->id}}/list"><i class="glyphicon glyphicon-home"></i>Danh sách sinh viên</a></li>
+            <li class=""><a href="class/{{$class->id}}/info"><i class="glyphicon glyphicon-home"></i>THông tin lớp</a></li>
+            @if($user->userClass!=null)
+              <li ><a href="class/{{$class->id}}/discussion"><i class="glyphicon glyphicon-tasks"></i>New discussion</a></li>
+            @endif
             <li class="submenu">
                  <a href="#">
-                    <i class="glyphicon glyphicon-list"></i> Danh sách lớp tham gia
+                    <i class="glyphicon glyphicon-list"></i>Discussion
                     <span class="caret pull-right"></span>
                  </a>
                  <!-- Sub menu -->
                  <ul>
-                    @if($user->userClass!=null)
-                      @foreach($user->userClass as $uc)
-                          <li><a href="#">{{$uc->class->id}} - {{$uc->class->cname}}</a></li>
+                      @foreach($class->post as $post)
+                        @if($post->status == 0)
+                          <li><a href="class/{{$class->id}}/discussion/{{$post->id}}">{{$post->title}}</a></li>
+                        @endif
                       @endforeach
-                    @endif
                 </ul>
             </li>
         </ul>
@@ -86,53 +90,39 @@
   </div>
 @endsection
 @section("content")
-<div class="col-md-8">
+<div class="col-lg-10">
 	<div class="content-box-large">
 		<div class="panel-heading">
-        <div class="panel-title"><h2>Tham gia lớp học</h2></div>
-      
-<!--         <div class="panel-options">
-          <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-          <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-        </div> -->
+        <div class="panel-title"><h2 class="page-header">Bài đăng</h2></div>				   
     </div>
 		<div class="panel-body">
-			<form class="form-horizontal" method="post" action="join">
-        {{ csrf_field() }}
-				<div class="form-group">
-          @if(session("thongbao"))
-            <div class="alert alert-success">
-              {{session("thongbao")}}
+        <form action="" method="post" enctype="multipart/form-data">
+          {{csrf_field()}}
+            <div class="row form-group">
+                <div class="col-md-2"><label>Tiêu đề</label></div>
+                <div class="col-md-8"><input class="form-control" name="title" value="{{$post->title}}"></div>
             </div>
-          @endif
-          @if(session("thatbai"))
-            <div class="alert alert-danger">
-              {{session("thatbai")}}
+            <div class="row form-group">
+                <div class="col-md-2"><label>Nội dung</label></div>
+                <div class="col-md-8"> <textarea class="form-control" rows="5" name="content">{{$post->content}}</textarea></div>
             </div>
-          @endif
-          @if(session("tontai"))
-            <div class="alert alert-danger">
-              {{session("tontai")}}
+            <div class="row form-group">
+                <div class="col-md-2"><label>File</label></div>
+                <div class="col-md-4">
+                    <input type="file" name='image' id='fileinput'>
+                </div>
             </div>
-          @endif
-					<label for="inputEmail3" class="col-sm-2 control-label" >Nhập mã lớp</label>
-					<div class="col-sm-5">
-				  	<input type="input" class="form-control" id="inputEmail3" name="cid" placeholder="Nhập mã lớp">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputPassword3" class="col-sm-2 control-label" >Mã kích hoạt</label>
-					<div class="col-sm-5">
-				  		<input type="password" class="form-control" id="inputPassword3" name="enroll" placeholder="Mã kích hoạt">
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-5">
-				  		<button type="submit" class="btn btn-primary">Enroll</button>
-					</div>
-				</div>
-			</form>
+            <button type="submit" class="btn btn-danger">Post My Question to {{$class->id}}!</button>
+            <!-- {{-- <a href=''class="btn btn-default">Save Draft</a> --}} -->
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <!-- {{-- <a href=''class="btn btn-default">Preview Post</a> --}} -->
+        </form>
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('script')
+  <script type="text/javascript">
+  </script>
 @endsection
