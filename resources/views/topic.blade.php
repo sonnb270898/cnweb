@@ -235,7 +235,7 @@
                 //thêm files vào trong form data
                 if(file_data!=null) form_data.append('file', file_data);
                 form_data.append('content', $("#contentt").val());
-                form_data.append('pid', {{$post->id}});
+                form_data.append('pid', {{$topic->id}});
                 //sử dụng ajax post
                 $.ajaxSetup({
                   headers: {

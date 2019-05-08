@@ -77,7 +77,7 @@ class LoginController extends Controller
 
     public function getAdminLogin(){
         if(Auth::guard('admin')->check())
-            return redirect('admin/');
+            return redirect()->route('admin.home');
         return view('admin.login');
     }
     public function postAdminLogin(Request $request){
