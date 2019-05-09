@@ -48,7 +48,7 @@ Admin
 <div class="col-md-8">
     <div class="content-box-large">
         <div class="panel-heading">
-        <div class="panel-title"><h2>Thông tin sinh viên trong lớp</h2></div>
+        <div class="panel-title"><h2>Quản lý bài đăng</h2></div>
       
     </div>
         <div class="panel-body">

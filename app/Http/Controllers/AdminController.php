@@ -32,7 +32,7 @@ class AdminController extends Controller
     }
 
     public function getEditClass($cid){
-    	    	$admin = Admin::find(Auth::guard('admin')->id());
+    	$admin = Admin::find(Auth::guard('admin')->id());
     	$class = Classes::find($cid);
     	return view('admin.class.editclass')->with(['class'=>$class,'admin'=>$admin]);
     }
@@ -88,7 +88,7 @@ class AdminController extends Controller
         $user->address = $request->address;
         $user->dob = $request->dob;
         $user->save();
-    	return redirect()->route('admin.user',['user'=>$user,'class'=>$class,'admin'=>$admin,'cid'=>$cid]);
+    	return redirect()->route('admin.user',['cid'=>$cid])->with(['user'=>$user,'class'=>$class,'admin'=>$admin]);
     }
 
         public function getTopic($cid){
@@ -118,6 +118,25 @@ class AdminController extends Controller
             $topic->save();
         }
         $topic->save();
-    	return redirect()->route('admin.topic',['class'=>$class,'admin'=>$admin,'topic'=>$topic,'cid'=>$cid]);
-    }		
+    	return redirect()->route('admin.topic',['cid'=>$cid])->with(['class'=>$class,'admin'=>$admin,'topic'=>$topic]);
+    }
+
+    public function getDelTopic($cid,$pid){
+        $class = Classes::find($cid);
+        $topic = Post::find($pid);
+        $admin = Admin::find(Auth::guard('admin')->id());
+        $topic->status = 1;
+        $topic->save();
+        return redirect()->route('admin.topic',['cid'=>$cid])->with(['class'=>$class,'admin'=>$admin,'topic'=>$topic]);
+    }
+
+    public function getDelUser($cid,$uid){
+        $class = Classes::find($cid);
+        $admin = Admin::find(Auth::guard('admin')->id());
+        $userClass = UserClass::where([['cid',$cid]])->get();
+        $u = UserClass::where(['uid'=>$uid,'cid'=>$cid])->get()->first();
+        $u->status = 1;
+        $u->save();
+        return redirect()->route('admin.user',['cid'=>$cid])->with(['userClass'=>$userClass,'class'=>$class,'admin'=>$admin]);
+    }
 }

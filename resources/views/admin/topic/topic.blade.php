@@ -48,7 +48,7 @@ Admin
 <div class="col-md-8">
   <div class="content-box-large">
     <div class="panel-heading">
-        <div class="panel-title"><h2>Quản lí</h2></div>
+        <div class="panel-title"><h2>Quản lý bài đăng</h2></div>
       
         <div class="panel-options">
 <!--           <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a> -->
@@ -66,13 +66,15 @@ Admin
               </thead>
               <tbody id="body">
                   @foreach($topic as $tp)
-                  <tr>
-                      <td>{{$tp->id}}</td>
-                      <td>{{$tp->title}}</td>
-                      <td>{{$tp->u->name}}</td>
-                      <td><a href="admin/class/{{$class->id}}/topic/{{$tp->id}}/edit" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a></td>
-                      <td><a href="" data-rel="collapse"><i class="glyphicon glyphicon-remove"></i></a></td>
-                  </tr>
+                    @if($tp->status != 1 )
+                    <tr>
+                        <td>{{$tp->id}}</td>
+                        <td>{{$tp->title}}</td>
+                        <td>{{$tp->u->name}}</td>
+                        <td><a href="admin/class/{{$class->id}}/topic/{{$tp->id}}/edit" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a></td>
+                        <td><a onclick="myFunc({{$class->id}},{{$tp->id}})" style="cursor: pointer;" data-rel="collapse"><i class="glyphicon glyphicon-remove"></i></a></td>
+                    </tr>
+                    @endif
                   @endforeach
               </tbody>
           </table>
@@ -87,6 +89,11 @@ Admin
         dom: 'Bfrtip',
     });
 });
+  function myFunc(cid,pid){
+      if (confirm('Bạn có chắc chắn muốn xóa bài đăng?')){
+        window.location.href="admin/class/"+cid+"/topic/"+pid+"/del";
+    }  
+  }
 </script>
 </div>
     <div class="panel-body">

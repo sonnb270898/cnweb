@@ -48,7 +48,7 @@ Admin
 <div class="col-md-8">
 	<div class="content-box-large">
 		<div class="panel-heading">
-        <div class="panel-title"><h2>Thông tin sinh viên trong lớp</h2></div>
+        <div class="panel-title"><h2>Quản lý người dùng</h2></div>
       
  <!--        <div class="panel-options">
           <a href="admin/class/{{$class->id}}/user/{{$user->id}}edit" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
