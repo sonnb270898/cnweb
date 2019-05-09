@@ -33,7 +33,7 @@
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 				<div class="login-wrapper">
-					<form action="admin/login" method='post'>
+					<form action="" method='post'>
 						{{ csrf_field() }}
 						<div class="box">
 				            <div class="content-wrap">

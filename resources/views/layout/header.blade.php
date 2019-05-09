@@ -4,7 +4,7 @@
 	           <div class="col-md-5">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="index.html">Nhom17</a></h1>
+	                 <h1><a href="">Nhom17</a></h1>
 	              </div>
 	           </div>
 	           	<div class="col-md-2">

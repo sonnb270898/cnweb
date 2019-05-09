@@ -76,7 +76,7 @@ class LoginController extends Controller
     }
 
     public function getAdminLogin(){
-        if(Auth::guard('admin')->check())
+        if(Auth::guard('admin')->user())
             return redirect()->route('admin.home');
         return view('admin.login');
     }
@@ -84,7 +84,7 @@ class LoginController extends Controller
         if(Auth::guard('admin')->attempt(['username'=>$request->username,'password'=>$request->password])){
             return  redirect()->route('admin.home');
         }
-        return redirect()->back();
+        return redirect('admin/login');
     }
 
 

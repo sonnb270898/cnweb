@@ -86,6 +86,23 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function(){
 
 	Route::get('/','AdminController@getAdminHome')->name('admin.home');
 
+	Route::get('class/{cid}','AdminController@getClass')->name('admin.class');
+
+	Route::get('class/{cid}/edit','AdminController@getEditClass');
+
+	Route::post('class/{cid}/edit','AdminController@postEditClass');
+
+	Route::get('class/{cid}/user','AdminController@getUserClass')->name('admin.user');
+
+	Route::get('class/{cid}/user/{uid}/edit','AdminController@getEditUser');
+
+	Route::post('class/{cid}/user/{uid}/edit','AdminController@postEditUser');
+
+	Route::get('class/{cid}/topic','AdminController@getTopic')->name('admin.topic');
+
+	Route::get('class/{cid}/topic/{pid}/edit','AdminController@getEditTopic');
+
+	Route::post('class/{cid}/topic/{pid}/edit','AdminController@postEditTopic');
 });
 
 

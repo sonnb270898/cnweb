@@ -8,8 +8,9 @@ Admin
          <div class="container">
             <div class="row">
                <div class="col-md-5">
+
                   <div class="logo">
-                     <h1><a href="">Nhom17</a></h1>
+                     <h1><a href="/">Nhom17</a></h1>
                   </div>
                </div>
                <div class="7">
@@ -31,12 +32,22 @@ Admin
          </div>
     </div>
 @endsection
-
+@section("menu")
+  <div class="col-md-2">
+    <div class="sidebar content-box" style="display: block;">
+        <ul class="nav">
+            
+            <li class=""><a href="admin/class/{{$class->id}}"><i class="glyphicon glyphicon-home"></i>Quản lý lớp</a></li>
+            <li class=""><a href="admin/class/{{$class->id}}/user"><i class="glyphicon glyphicon-home"></i>Quản lý sinh viên</a></li>         
+            <li class=""><a href="admin/class/{{$class->id}}/topic"><i class="glyphicon glyphicon-home"></i>Quản lý bài đăng</a></li> 
+        </ul>
+     </div>
+  </div>
+@endsection
 @section("content")
-<div class="col-md-2"></div>
 <div class="col-md-8">
-	<div class="content-box-large">
-		<div class="panel-heading">
+  <div class="content-box-large">
+    <div class="panel-heading">
         <div class="panel-title"><h2>Quản lí</h2></div>
       
         <div class="panel-options">
@@ -48,20 +59,24 @@ Admin
           <table id="example" class="display" style="width:100%">
               <thead>
                   <th>id</th>
-                  <th>Tên lớp</th>
-                  <th>Ngày tạo</th>
-                  <th>Giáo viên</th>
+                  <th>Tên tài khoản</th>
+                  <th>Họ và tên</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Dob</th>
                   <th>Sửa</th>
                   <th>Xóa</th>
               </thead>
               <tbody id="body">
-                  @foreach($classes as $cl)
+                  @foreach($userClass as $uc)
                   <tr>
-                      <td>{{$cl->id}}</td>
-                      <td>{{$cl->cname}}</td>
-                      <td>{{$cl->createdate}}</td>
-                      <td>{{$cl->u->name}}</td>
-                      <td><a href="admin/class/{{$cl->id}}" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a></td>
+                      <td>{{$uc->user->id}}</td>
+                      <td>{{$uc->user->username}}</td>
+                      <td>{{$uc->user->name}}</td>
+                      <td>{{$uc->user->email}}</td>
+                      <td>{{$uc->user->address}}</td>
+                      <td>{{$uc->user->dob}}</td>
+                      <td><a href="admin/class/{{$class->id}}/user/{{$uc->user->id}}/edit" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a></td>
                       <td><a href="" data-rel="collapse"><i class="glyphicon glyphicon-remove"></i></a></td>
                   </tr>
                   @endforeach
@@ -80,9 +95,9 @@ Admin
 });
 </script>
 </div>
-		<div class="panel-body">
-			
-		</div>
-	</div>
+    <div class="panel-body">
+      
+    </div>
+  </div>
 </div>
 @endsection
