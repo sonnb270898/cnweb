@@ -20,7 +20,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Class <b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
                               @foreach($user->userClass as $userClass)
-                                <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
+                                @if($userClass->status != 1)
+                                  <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
+                                @endif
                               @endforeach
                               <li><a href="join">Join Class</a></li>
                               <li><a href="create">Create Class</a></li>
@@ -94,10 +96,10 @@
 		<div class="panel-heading">
         <div class="panel-title page-header"><h2>Danh sách sinh viên</h2></div>
       
-        <div class="panel-options">
+<!--         <div class="panel-options">
           <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
           <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-        </div>
+        </div> -->
     </div>
     <div class="panel-body">
           <div class="form-group">
@@ -106,6 +108,7 @@
                   <th>id</th>
                   <th>Tên sinh viên</th>
                   <th>Username</th>
+                  <th>Chức vụ</th>
                   <th>Email</th>
                   <th>Adress</th>
                   <th>DoB</th>
@@ -116,8 +119,13 @@
                       <td>{{$uc->user->id}}</td>
                       <td>{{$uc->user->name}}</td>
                       <td>{{$uc->user->username}}</td>
+                      @if($uc->user->id == $uc->class->creator)
+                        <td>Giáo viên</td>
+                      @else
+                        <td>Học sinh</td>
+                      @endif
                       <td>{{$uc->user->email}}</td>
-                      <td>{{$uc->user->adress}}</td>
+                      <td>{{$uc->user->address}}</td>
                       <td>{{$uc->user->dob}}</td>
                   </tr>
                   @endforeach

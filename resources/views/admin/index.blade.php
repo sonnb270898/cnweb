@@ -20,6 +20,7 @@ Admin
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, {{$admin->username}}<b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
                               <li><a href="{{Route('admin.home')}}">Trang chủ</a></li>
+                              <li><a href="{{Route('admin.class.add')}}">Tạo lớp</a></li>
                               <li><a href="{{Route('logout')}}">Logout</a></li>
                             </ul>
                           </li>

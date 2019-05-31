@@ -17,11 +17,12 @@ use App\RepComment;
 use App\Comment;
 
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 class AjaxController extends Controller
 {
     //
     public function getComment(Request $request){
+        $current_date_time = Carbon::now()->toDateTimeString();
         $user=User::find(Auth::user()->id);
         $comment=new Comment;
         $comment->content=$request->content;
@@ -37,6 +38,7 @@ class AjaxController extends Controller
         }
         echo '<div class="form-group" style="margin-left: 15px">
               <div class="username">'.$user->name.'</div>
+              <div style="font-size: 12px;">'.$current_date_time.'</div>
               <div class="comment">'.$comment->content.'</div>';
         if($comment->image!=null) echo '<img src="'.$comment->image.'" style="max-height: 150px;">';
         echo     '<div class="rep" id="rep'.$comment->id.'"><a>reply</a></div>
@@ -56,6 +58,7 @@ class AjaxController extends Controller
     }
     
     function repcomment(Request $request){
+        $current_date_time = Carbon::now()->toDateTimeString();
         $user=User::find(Auth::user()->id);
         $comment= new Comment;
         $comment->content=$request->content;
@@ -75,6 +78,7 @@ class AjaxController extends Controller
         $rep->save();
         echo '<div>
             <div class="username">'.$user->name.'</div>
+            <div style="font-size: 12px;">'.$current_date_time.'</div>
             <div class="comment">'.$request->content.'</div>';
         if($comment->image!=null) echo '<img src="'.$comment->image.'" style="max-height: 150px;">';    
         echo    '</div>';

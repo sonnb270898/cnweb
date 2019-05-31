@@ -19,6 +19,10 @@ class ClassController extends Controller
 {
     
     public function getClass($id){
+        $user = Auth::user();
+        $userClass = UserClass::where([['uid',$user->id],['cid',$id]])->first();
+        if(!$userClass || $userClass->status == 1)
+            return redirect()->back();
     	return redirect()->route("userlist",['id'=>$id]);
     }
     public function getClassInfo($id){
@@ -26,6 +30,9 @@ class ClassController extends Controller
         $classes = Classes::all();
         $creator = User::find($class->creator);
         $user = Auth::user();
+        $userClass = UserClass::where([['uid',$user->id],['cid',$id]])->first();
+        if(!$userClass || $userClass->status == 1)
+            return redirect()->back();
         return view("classinfo",['user'=>$user,'creator'=>$creator,'class'=>$class,'classes'=>$classes]);
     }
 
@@ -88,12 +95,11 @@ class ClassController extends Controller
 
         if ($class == null) {
             $newclass= new Classes;
-            $now = new DateTime;
             $newclass->cname=$request->cname;
             $newclass->enroll=$request->enroll;
             $newclass->creator=Auth::user()->id;
             $newclass->save();
-            return redirect()->back()->with("thongbao","Tạo thành công lớp ".$request->class);
+            return redirect()->back()->with("thongbao","Tạo thành công lớp ");
         }
         return redirect()->back()->with("thatbai","Lớp đã tồn tại");
     }

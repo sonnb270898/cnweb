@@ -22,7 +22,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Class <b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
                               @foreach($user->userClass as $userClass)
-                                <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
+                                @if($userClass->status != 1)
+                                  <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
+                                @endif
                               @endforeach
                               <li><a href="join">Join Class</a></li>
                               <li><a href="create">Create Class</a></li>
@@ -98,6 +100,7 @@
       <div class="content-box-header">
         <div class="panel-title">{{$topic->title}}</div>      
       <div class="panel-options">
+        <span style="margin-right: 20px; font-size: 12px; ">{{$topic->created_at}}</span>
         <a href="class/{{$class->id}}/discussion/{{$topic->id}}/edit" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
         <a onclick="myFunc('{{$class->id}}','{{$topic->id}}')" style="cursor: pointer;" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
       </div>
@@ -130,6 +133,7 @@
                 @if($cmt->status == 0)
                 <div class="form-group" style="margin-left: 15px">
                   <div class="username">{{$cmt->user->name}}</div>
+                  <div style="font-size: 12px;">{{$cmt->created_at}}</div>
                   <div class='comment'>{{$cmt->content}}</div>
                   @if($cmt->image!=null)
                     <img src="{{$cmt->image}}" style="max-height: 150px;">
@@ -142,6 +146,7 @@
                     <div id="a{{$cmt->id}}">
                       @foreach($cmt->rep_cmt as $rep) 
                           <div class="username">{{$rep->comment->user->name}}</div>
+                          <div style="font-size: 12px;">{{$rep->comment->created_at}}</div>
                           <div class='comment'>{{$rep->comment->content}}</div>
                           @if($rep->comment->image!=null)
                           <img src="{{$rep->comment->image}}" style="max-height: 150px;">

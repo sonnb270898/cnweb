@@ -21,6 +21,7 @@ Admin
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, {{$admin->username}}<b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
                               <li><a href="{{Route('admin.home')}}">Trang chủ</a></li>
+                              <li><a href="{{Route('admin.class.add')}}">Tạo lớp</a></li>
                               <li><a href="{{Route('logout')}}">Logout</a></li>
                             </ul>
                           </li>
@@ -36,10 +37,10 @@ Admin
   <div class="col-md-2">
     <div class="sidebar content-box" style="display: block;">
         <ul class="nav">
-            
             <li class=""><a href="admin/class/{{$class->id}}"><i class="glyphicon glyphicon-home"></i>Quản lý lớp</a></li>
             <li class=""><a href="admin/class/{{$class->id}}/user"><i class="glyphicon glyphicon-home"></i>Quản lý sinh viên</a></li>         
-            <li class=""><a href="admin/class/{{$class->id}}/topic"><i class="glyphicon glyphicon-home"></i>Quản lý bài đăng</a></li> 
+            <li class=""><a href="admin/class/{{$class->id}}/topic"><i class="glyphicon glyphicon-home"></i>Quản lý bài đăng</a></li>
+            <li class=""><a href="admin/class/{{$class->id}}/add"><i class="glyphicon glyphicon-home"></i>Thêm sinh viên</a></li>  
         </ul>
      </div>
   </div>

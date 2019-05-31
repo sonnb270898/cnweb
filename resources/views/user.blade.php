@@ -8,7 +8,6 @@
          <div class="container">
             <div class="row">
                <div class="col-md-5">
-
                   <div class="logo">
                      <h1><a href="">Nhom17</a></h1>
                   </div>
@@ -21,7 +20,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Class <b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
                               @foreach($user->userClass as $userClass)
-                                <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
+                                @if($userClass->status != 1)
+                                  <li><a href="class/{{$userClass->class->id}}">{{$userClass->class->id}}-{{$userClass->class->cname}}</a></li>
+                                @endif
                               @endforeach
                               <li><a href="join">Join Class</a></li>
                               <li><a href="create">Create Class</a></li>

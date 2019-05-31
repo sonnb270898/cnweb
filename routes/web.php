@@ -86,6 +86,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function(){
 
 	Route::get('/','AdminController@getAdminHome')->name('admin.home');
 
+	Route::get('addclass','AdminController@getAddClass')->name('admin.class.add');
+
+	Route::post('addclass','AdminController@postAddClass');
+
 	Route::get('class/{cid}','AdminController@getClass')->name('admin.class');
 
 	Route::get('class/{cid}/edit','AdminController@getEditClass');
@@ -100,6 +104,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function(){
 	Route::post('class/{cid}/user/{uid}/edit','AdminController@postEditUser');
 
 	Route::get('class/{cid}/user/{uid}/del','AdminController@getDelUser');
+
+	Route::get('class/{cid}/add','AdminController@getAddUser');
+
+	Route::post('class/{cid}/add','AdminController@postAddUser');
 
 //Topic
 	Route::get('class/{cid}/topic','AdminController@getTopic')->name('admin.topic');

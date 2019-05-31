@@ -15,8 +15,12 @@ use Validator;
 class UserController extends Controller
 {	
 	
-    function user(){
+    public function user(){
     	$user=Auth::user();
+        $userClass=UserClass::where([["uid",Auth::user()->id]])->get()->first();
+        if(!$userClass){
+            return redirect()->route('join')->with("thatbai","Vui lòng tham gia 1 lớp học");
+        }
     	return view("user",["user"=>$user]);
     }
 
@@ -59,6 +63,9 @@ class UserController extends Controller
             $user = Auth::user();
             $userClass=UserClass::where([["cid",$id]])->get()->all();
             $class = Classes::find($id);
+            $uc = UserClass::where([['uid',$user->id],['cid',$id]])->first();
+            if(!$uc || $uc->status == 1)
+                return redirect()->back();
             return view("userlist",["userclass"=>$userClass,'user'=>$user,'class'=>$class]);
     }
 }

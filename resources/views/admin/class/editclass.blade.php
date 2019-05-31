@@ -21,6 +21,7 @@ Admin
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, {{$admin->username}}<b class="caret"></b></a>
                             <ul class="dropdown-menu animated fadeInUp">
                               <li><a href="{{Route('admin.home')}}">Trang chủ</a></li>
+                              <li><a href="{{Route('admin.class.add')}}">Tạo lớp</a></li>
                               <li><a href="{{Route('logout')}}">Logout</a></li>
                             </ul>
                           </li>
@@ -36,10 +37,10 @@ Admin
   <div class="col-md-2">
     <div class="sidebar content-box" style="display: block;">
         <ul class="nav">
-            
             <li class=""><a href="admin/class/{{$class->id}}"><i class="glyphicon glyphicon-home"></i>Quản lý lớp</a></li>
             <li class=""><a href="admin/class/{{$class->id}}/user"><i class="glyphicon glyphicon-home"></i>Quản lý sinh viên</a></li>         
             <li class=""><a href="admin/class/{{$class->id}}/topic"><i class="glyphicon glyphicon-home"></i>Quản lý bài đăng</a></li>
+            <li class=""><a href="admin/class/{{$class->id}}/add"><i class="glyphicon glyphicon-home"></i>Thêm sinh viên</a></li> 
         </ul>
      </div>
   </div>
@@ -57,6 +58,13 @@ Admin
     </div>
 		<div class="panel-body">
 			<form class="form-horizontal" action="" method="post" role="form">
+      @if(count($errors)>0)
+        <div class="alert alert-danger">
+          @foreach($errors->all() as $err)
+          <p>{{$err}}</p>
+          @endforeach
+        </div>
+        @endif
         {{ csrf_field() }}
         <div class="form-group">
           <label for="cid" class="col-sm-2 control-label">ID</label>
@@ -70,10 +78,16 @@ Admin
 				  	<input type="text" class="form-control" id="cname" name='cname' placeholder="Tên lớp" value="{{$class->cname}}" required="">
 					</div>
 				</div>
+          <div class="form-group">
+          <label for="enroll" class="col-sm-2 control-label">Enroll</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="enroll" name='enroll' placeholder="enroll" value="{{$class->enroll}}" required="">
+          </div>
+        </div>
         <div class="form-group">
           <label for="creator" class="col-sm-2 control-label">ID Người tạo</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control" id="creator" name='creator' placeholder="Ngày sinh" value="{{$class->creator}}" required="">
+              <input type="text" class="form-control" id="creator" name='creator' placeholder="" value="{{$class->creator}}" required="">
           </div>
         </div>
 <!-- 				<div class="form-group">

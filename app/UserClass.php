@@ -9,8 +9,6 @@ class UserClass extends Model
     //
 	protected $table="user_class";
 
-	protected $primaryKey = 'uid';
-
     public $timestamps=false;
 
     public function class(){

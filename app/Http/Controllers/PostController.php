@@ -18,6 +18,9 @@ class PostController extends Controller
     public function getDiscussion($id){
     	$class=Classes::find($id);
     	$user = Auth::user();
+        $userClass = UserClass::where([['uid',$user->id],['cid',$id]])->first();
+        if(!$userClass || $userClass->status == 1)
+            return redirect()->back();
     	return view("form",["class"=>$class,"user"=>$user]);
     }
 
@@ -34,13 +37,16 @@ class PostController extends Controller
             $post->save();
         }
     	$post->save();
-    	return redirect("class/".$id)->with("thongbao","Đăng thành công");
+    	return redirect()->back()->with("thongbao","Đăng thành công");
     }
 
     public function getViewDiscussion($id,$pid){
         $class=Classes::find($id);
         $user = Auth::user();
         $post = Post::find($pid);
+        $userClass = UserClass::where([['uid',$user->id],['cid',$id]])->first();
+        if(!$userClass || $userClass->status == 1)
+            return redirect()->back();
         if($post->status == 0)
             return view("topic",["class" =>$class,"user"=>$user,"topic"=>$post]);
         return redirect()->back();
@@ -76,7 +82,10 @@ class PostController extends Controller
         $class=Classes::find($id);
         $user = Auth::user();
         $post = Post::find($pid);
-        if($user->id == $post->uid)
+        $userClass = UserClass::where([['uid',$user->id],['cid',$id]])->first();
+        if(!$userClass || $userClass->status == 1)
+            return redirect()->back();
+        if($user->id == $post->uid || $user->id == $class->creator)
             return view('editform',["class" =>$class,"user"=>$user,"post"=>$post,'id'=>$id,'pid'=>$pid]);
         return redirect()->back();
     }    
@@ -100,7 +109,7 @@ class PostController extends Controller
         $class=Classes::find($id);
         $user = Auth::user();
         $post = Post::find($pid);
-        if($user->id == $post->uid){
+        if($user->id == $post->uid || $user->id == $class->creator){
             $post->status = 1;
             $post->save();
         }
